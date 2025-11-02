@@ -14,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class BorrowRecordId implements Serializable {
 
-    private Integer borrower;
+    private Integer account;
     private Integer book;
 
     @Override
@@ -22,11 +22,11 @@ public class BorrowRecordId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof BorrowRecordId)) return false;
         BorrowRecordId that = (BorrowRecordId) o;
-        return Objects.equals(borrower, that.borrower) && Objects.equals(book, that.book);
+        return Objects.equals(account, that.account) && Objects.equals(book, that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(borrower, book);
+        return Objects.hash(account, book);
     }
 }

@@ -19,8 +19,8 @@ public class BorrowRecord {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "borrower_id", referencedColumnName = "id")
-    private Borrower borrower;
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 
     @Id
     @ManyToOne
