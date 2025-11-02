@@ -24,7 +24,7 @@ public class BorrowRecord {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "book", referencedColumnName = "id")
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Books book;
 
     @Column(name = "start_date")

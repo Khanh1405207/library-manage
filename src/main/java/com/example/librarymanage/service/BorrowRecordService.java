@@ -32,6 +32,10 @@ public class BorrowRecordService {
         return borrowRecordRepository.findBorrowRecordsByAccount_Id(accountId);
     }
 
+    public BorrowRecord getByRecordId(Integer accountId,Integer bookId){
+        return borrowRecordRepository.findBorrowRecordByAccount_IdAndBook_Id(accountId,bookId);
+    }
+
     public Boolean existRecord(Integer accountId, Integer bookId){
         return borrowRecordRepository.existsByAccount_IdAndBook_IdAndEndDateIsNull(accountId,bookId);
     }

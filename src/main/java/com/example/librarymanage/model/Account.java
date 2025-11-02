@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "account", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
+@Table(name = "account", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     @NotNull
     private String userName;
 
