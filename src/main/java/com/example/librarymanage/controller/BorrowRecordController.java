@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/borrow-record-api")
+@RequestMapping("/api")
 public class BorrowRecordController {
 
     @Autowired
