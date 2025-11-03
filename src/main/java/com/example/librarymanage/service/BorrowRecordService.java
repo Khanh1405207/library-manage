@@ -1,16 +1,19 @@
 package com.example.librarymanage.service;
 
+import com.example.librarymanage.DTO.BorrowRecordDTO;
 import com.example.librarymanage.model.Account;
 import com.example.librarymanage.model.Books;
 import com.example.librarymanage.model.BorrowRecord;
 import com.example.librarymanage.model.BorrowRecordId;
 import com.example.librarymanage.repository.BooksRepository;
 import com.example.librarymanage.repository.BorrowRecordRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BorrowRecordService {
@@ -20,20 +23,30 @@ public class BorrowRecordService {
     @Autowired
     BooksRepository booksRepository;
 
-    public List<BorrowRecord> getAll(){
-        return borrowRecordRepository.findAll();
+    public List<BorrowRecordDTO> getAll(){
+        return borrowRecordRepository.findAll().stream()
+                .map(BorrowRecordDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public BorrowRecord getOne(BorrowRecordId id){
-        return borrowRecordRepository.findById(id).get();
+    public BorrowRecordDTO getOne(BorrowRecordId id){
+        BorrowRecord borrowRecord=borrowRecordRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ban ghi muon khong ton tai"));
+        return new BorrowRecordDTO(borrowRecord);
     }
 
-    public List<BorrowRecord> getByAccountId(Integer accountId){
-        return borrowRecordRepository.findBorrowRecordsByAccount_Id(accountId);
+    public List<BorrowRecordDTO> getByAccountId(Integer accountId){
+        return borrowRecordRepository.findBorrowRecordsByAccount_Id(accountId).stream()
+                .map(BorrowRecordDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public BorrowRecord getByRecordId(Integer accountId,Integer bookId){
-        return borrowRecordRepository.findBorrowRecordByAccount_IdAndBook_Id(accountId,bookId);
+    public BorrowRecordDTO getByRecordId(Integer accountId,Integer bookId){
+        BorrowRecord borrowRecord=borrowRecordRepository.findBorrowRecordByAccount_IdAndBook_Id(accountId,bookId);
+        if (borrowRecord == null){
+            throw new EntityNotFoundException("Ban ghi muon khong ton tai");
+        }
+        return new BorrowRecordDTO(borrowRecord);
     }
 
     public Boolean existRecord(Integer accountId, Integer bookId){
@@ -51,7 +64,8 @@ public class BorrowRecordService {
     public void endBorrowRecord(Account account,Books book){
         LocalDateTime endTime= LocalDateTime.now();
         BorrowRecordId id=new BorrowRecordId(account.getId(),book.getId());
-        BorrowRecord record=borrowRecordRepository.findById(id).get();
+        BorrowRecord record=borrowRecordRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ban ghi muon khong ton tai"));
         record.setEndDate(endTime);
         book.setRemaining(book.getRemaining()+1);
         booksRepository.save(book);

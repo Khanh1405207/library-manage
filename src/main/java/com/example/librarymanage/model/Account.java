@@ -24,7 +24,7 @@ public class Account {
 
     @Column(name = "username")
     @NotNull
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     @NotNull
