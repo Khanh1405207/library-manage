@@ -1,15 +1,18 @@
 package com.example.librarymanage.controller;
 
 import com.example.librarymanage.DTO.BorrowRecordDTO;
+import com.example.librarymanage.model.Account;
+import com.example.librarymanage.model.Books;
 import com.example.librarymanage.model.BorrowRecord;
+import com.example.librarymanage.service.AccountService;
+import com.example.librarymanage.service.BooksService;
 import com.example.librarymanage.service.BorrowRecordService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +22,12 @@ public class BorrowRecordController {
 
     @Autowired
     BorrowRecordService borrowRecordService;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    BooksService booksService;
 
-    @GetMapping("/borrow-records")
+    @GetMapping("/records")
     public ResponseEntity<List<BorrowRecordDTO>> getListRecord(){
         List<BorrowRecordDTO> recordDTOS = borrowRecordService.getAll();
         return ResponseEntity.ok(recordDTOS);
@@ -33,11 +40,49 @@ public class BorrowRecordController {
     }
 
     @GetMapping("/records-by-record")
-    public ResponseEntity<BorrowRecordDTO> getListRecordByRecord(
+    public ResponseEntity<?> getListRecordByRecord(
             @RequestParam("accountId") Integer accountid,
             @RequestParam("bookId") Integer bookid
     ){
-        BorrowRecordDTO recordDTO= borrowRecordService.getByRecordId(accountid,bookid);
-        return ResponseEntity.ok(recordDTO);
+        try {
+            BorrowRecordDTO recordDTO= borrowRecordService.getByRecordId(accountid,bookid);
+            return ResponseEntity.ok(recordDTO);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
+        }
+    }
+
+    @PostMapping("/records")
+    public ResponseEntity<?> startRecords(
+            @RequestParam("accountId") Integer AccountId,
+            @RequestParam("bookId") Integer bookId)
+    {
+        try {
+            Account account= accountService.getOne(AccountId);
+            Books book=booksService.getOne(bookId);
+            BorrowRecord created=borrowRecordService.startBorrowRecord(account,book);
+            return ResponseEntity.ok(new BorrowRecordDTO(created));
+        }catch (DuplicateKeyException e) {
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
+        }catch(EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
+        }
+    }
+
+    @PutMapping("/records")
+    public ResponseEntity<?> endRecords(
+            @RequestParam("accountId") Integer AccountId,
+            @RequestParam("bookId") Integer bookId)
+    {
+        try {
+            Account account= accountService.getOne(AccountId);
+            Books book=booksService.getOne(bookId);
+            BorrowRecord created=borrowRecordService.endBorrowRecord(account,book);
+            return ResponseEntity.ok(new BorrowRecordDTO(created));
+        }catch (DuplicateKeyException e) {
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
+        }catch(EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
+        }
     }
 }

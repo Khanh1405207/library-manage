@@ -15,7 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "account", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+@Table(name = "account", uniqueConstraints ={
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class Account {
 
     @Id

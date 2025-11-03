@@ -7,6 +7,7 @@ import com.example.librarymanage.utility.AuthService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,18 +28,33 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-    public AccountDTO getOne(Integer id){
+    public Account getOne(Integer id){
         Account account=accountRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Account khong ton tai: "+ id));
-        return new AccountDTO(account);
+        return account;
     }
 
-    public void addAccount(Account account){
+    public Account addAccount(Account account){
+        if (accountRepository.existsByUsername(account.getUsername())){
+            throw new DuplicateKeyException("Username da ton tai");
+        }
+        if (accountRepository.existsByEmail(account.getEmail())){
+            throw new DuplicateKeyException("Email da ton tai");
+        }
         account.setPassword(authService.hashPass(account.getPassword()));
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
 
-    public void updateAccount(Account account){
-        accountRepository.save(account);
+    public Account updateAccount(Account account){
+        accountRepository.findById(account.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Tai khoan khong ton tai"));
+        if (accountRepository.existsByUsernameAndIdNot(account.getUsername(),account.getId())){
+            throw new DuplicateKeyException("Username da ton tai");
+        }
+        if (accountRepository.existsByEmailAndIdNot(account.getEmail(),account.getId())){
+            throw new DuplicateKeyException("Email da ton tai");
+        }
+        account.setPassword(authService.hashPass(account.getPassword()));
+        return accountRepository.save(account);
     }
 }

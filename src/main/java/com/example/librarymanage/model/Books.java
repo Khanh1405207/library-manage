@@ -1,6 +1,7 @@
 package com.example.librarymanage.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -22,15 +23,15 @@ public class Books {
     private Integer id;
 
     @Column(name = "book_code")
-    @NotNull
+    @NotBlank
     private String bookCode;
 
     @Column(name = "title")
-    @NotNull
+    @NotBlank
     private String title;
 
     @Column(name = "author")
-    @NotNull
+    @NotBlank
     private String author;
 
     @Column(name = "category")

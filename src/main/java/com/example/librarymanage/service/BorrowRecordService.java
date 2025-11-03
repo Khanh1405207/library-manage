@@ -9,6 +9,7 @@ import com.example.librarymanage.repository.BooksRepository;
 import com.example.librarymanage.repository.BorrowRecordRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -53,15 +54,18 @@ public class BorrowRecordService {
         return borrowRecordRepository.existsByAccount_IdAndBook_IdAndEndDateIsNull(accountId,bookId);
     }
 
-    public void startBorrowRecord(Account account,Books book){
+    public BorrowRecord startBorrowRecord(Account account,Books book){
+        if (existRecord(account.getId(),book.getId())){
+            throw new DuplicateKeyException("Ban ghi muon da ton tai");
+        }
         LocalDateTime startTime= LocalDateTime.now();
         BorrowRecord record=new BorrowRecord(account,book,startTime,null);
         book.setRemaining(book.getRemaining()-1);
         booksRepository.save(book);
-        borrowRecordRepository.save(record);
+        return borrowRecordRepository.save(record);
     }
 
-    public void endBorrowRecord(Account account,Books book){
+    public BorrowRecord endBorrowRecord(Account account,Books book){
         LocalDateTime endTime= LocalDateTime.now();
         BorrowRecordId id=new BorrowRecordId(account.getId(),book.getId());
         BorrowRecord record=borrowRecordRepository.findById(id)
@@ -69,6 +73,6 @@ public class BorrowRecordService {
         record.setEndDate(endTime);
         book.setRemaining(book.getRemaining()+1);
         booksRepository.save(book);
-        borrowRecordRepository.save(record);
+        return borrowRecordRepository.save(record);
     }
 }

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BooksRepository extends JpaRepository<Books,Integer> {
-
+    public Boolean existsByBookCode(String code);
+    public Boolean existsByBookCodeAndIdNot(String code,Integer id);
 }
