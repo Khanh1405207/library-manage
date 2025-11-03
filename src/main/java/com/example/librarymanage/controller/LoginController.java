@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     @Autowired
@@ -35,10 +35,12 @@ public class LoginController {
         try{
             String username= account.getUsername();
             String password= account.getPassword();
-            Account user= accountService.getAccountByUsername(username);
-            if (authService.check(password,user.getPassword())){
+            Account user= accountService.login(username,password);
+            if (user != null){
+                session.setAttribute("userId",user.getId());
+                session.setAttribute("username",user.getUsername());
                 session.setAttribute("role",user.getRole());
-                return ResponseEntity.ok(new AccountDTO(user));
+                return ResponseEntity.ok("Dang nhap thanh cong");
             }else {
                 return ResponseEntity.badRequest().body("Mat khau khong chinh xac");
             }

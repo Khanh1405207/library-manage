@@ -65,4 +65,13 @@ public class AccountService {
         account.setPassword(authService.hashPass(account.getPassword()));
         return accountRepository.save(account);
     }
+
+    public Account login(String username,String password){
+        Account user= getAccountByUsername(username);
+        if (authService.check(password,user.getPassword())){
+            return user;
+        }else {
+            return null;
+        }
+    }
 }
