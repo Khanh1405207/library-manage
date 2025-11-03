@@ -28,6 +28,14 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
+    public Account getAccountByUsername(String username){
+        Account account=accountRepository.findAccountByUsername(username);
+        if (account == null){
+            throw new EntityNotFoundException("Username khong ton tai");
+        }
+        return account;
+    }
+
     public Account getOne(Integer id){
         Account account=accountRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Account khong ton tai: "+ id));

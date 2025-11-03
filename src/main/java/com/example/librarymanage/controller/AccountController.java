@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,20 +39,6 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/accounts")
-    public ResponseEntity<?> addAccount(@RequestBody Account account){
-        try {
-            account.setRole(Role.USER);
-            account.setCreateDate(LocalDateTime.now());
-            Account created= accountService.addAccount(account);
-            return ResponseEntity.ok(new AccountDTO(created));
-        }catch (DuplicateKeyException e){
-            return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
-        }catch (ValidationException e){
-            return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
-        }
-    }
-
     @PutMapping("/accounts")
     public ResponseEntity<?> updateAccount(@RequestBody Account account){
         try {
@@ -63,6 +50,10 @@ public class AccountController {
         }catch (DuplicateKeyException e) {
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
         }catch(EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
+        }catch (ValidationException e){
+            return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
+        }catch (InvalidDataAccessApiUsageException e){
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
         }
     }
