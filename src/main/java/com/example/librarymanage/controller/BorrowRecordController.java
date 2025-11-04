@@ -41,11 +41,11 @@ public class BorrowRecordController {
 
     @GetMapping("/records-by-record")
     public ResponseEntity<?> getListRecordByRecord(
-            @RequestParam("accountId") Integer accountid,
-            @RequestParam("bookId") Integer bookid
+            @RequestParam("accountId") Integer accountId,
+            @RequestParam("bookId") Integer bookId
     ){
         try {
-            BorrowRecordDTO recordDTO= borrowRecordService.getByRecordId(accountid,bookid);
+            BorrowRecordDTO recordDTO= borrowRecordService.getByRecordId(accountId,bookId);
             return ResponseEntity.ok(recordDTO);
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().body("Error :"+e.getMessage());
