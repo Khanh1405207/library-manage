@@ -4,6 +4,7 @@ import com.example.librarymanage.DTO.AccountDTO;
 import com.example.librarymanage.model.Account;
 import com.example.librarymanage.model.Role;
 import com.example.librarymanage.service.AccountService;
+import com.example.librarymanage.utility.AuthService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
+    @Autowired
+    AuthService authService;
 
     @GetMapping("/accounts")
     public ResponseEntity<List<AccountDTO>> getListAccount(){
@@ -43,9 +46,9 @@ public class AccountController {
     public ResponseEntity<?> updateAccount(@RequestBody Account account){
         try {
             Account acc=accountService.getOne(account.getId());
-            account.setRole(acc.getRole());
-            account.setCreateDate(acc.getCreateDate());
-            Account updated=accountService.updateAccount(account);
+            acc.setUsername(account.getUsername());
+            acc.setEmail(account.getEmail());
+            Account updated=accountService.updateAccount(acc);
             return ResponseEntity.ok(new AccountDTO(updated));
         }catch (DuplicateKeyException e) {
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
@@ -55,6 +58,23 @@ public class AccountController {
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
         }catch (InvalidDataAccessApiUsageException e){
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
+        }
+    }
+
+    @PutMapping("/account-change-pass")
+    public ResponseEntity<?> changePass(@RequestParam("oldPass") String oldPass,@RequestBody Account account){
+        try{
+            Account acc=accountService.getOne(account.getId());
+            String cp=acc.getPassword();
+            if (authService.check(oldPass,cp)){
+                String newPass=authService.hashPass(account.getPassword());
+                acc.setPassword(newPass);
+                return ResponseEntity.ok(new AccountDTO(acc));
+            }else {
+                return ResponseEntity.badRequest().body("Mat khau khong chinh xac");
+            }
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Error :"+e.getMessage());
         }
     }
 }

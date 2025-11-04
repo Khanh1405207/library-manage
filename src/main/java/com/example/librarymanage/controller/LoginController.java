@@ -42,7 +42,7 @@ public class LoginController {
                 session.setAttribute("role",user.getRole());
                 return ResponseEntity.ok("Dang nhap thanh cong");
             }else {
-                return ResponseEntity.badRequest().body("Mat khau khong chinh xac");
+                return ResponseEntity.badRequest().body("Tai khoan/mat khau khong chinh xac");
             }
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().body("Error :"+e.getMessage());
