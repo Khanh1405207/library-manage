@@ -54,14 +54,14 @@ public class LoginController {
     }
 
     @GetMapping("/get-info")
-    public ResponseEntity<?> getInfo(HttpSession ss){
-        if (ss.getAttribute("username") == null){
+    public ResponseEntity<?> getInfo(){
+        if (session.getAttribute("username") == null){
             return ResponseEntity.badRequest().body("Chua dang nhap");
         }
         Map<String,Object> response= new HashMap<>();
-        response.put("id",ss.getAttribute("id"));
-        response.put("username",ss.getAttribute("username"));
-        response.put("role",ss.getAttribute("role"));
+        response.put("id",session.getAttribute("userId"));
+        response.put("username",session.getAttribute("username"));
+        response.put("role",session.getAttribute("role"));
         return ResponseEntity.ok(response);
     }
 
