@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/auth")
@@ -49,6 +51,18 @@ public class LoginController {
         }catch (ValidationException e){
             return ResponseEntity.badRequest().body("Error :"+e.getMessage());
         }
+    }
+
+    @GetMapping("/get-info")
+    public ResponseEntity<?> getInfo(HttpSession ss){
+        if (ss.getAttribute("username") == null){
+            return ResponseEntity.badRequest().body("Chua dang nhap");
+        }
+        Map<String,Object> response= new HashMap<>();
+        response.put("id",ss.getAttribute("id"));
+        response.put("username",ss.getAttribute("username"));
+        response.put("role",ss.getAttribute("role"));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/registry")
