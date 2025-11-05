@@ -78,4 +78,10 @@ public class LoginController {
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
         }
     }
+
+    @GetMapping("logout")
+    public  ResponseEntity<?> logOut(){
+        session.invalidate();
+        return ResponseEntity.ok("logout successfully");
+    }
 }

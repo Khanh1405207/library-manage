@@ -70,7 +70,7 @@ public class AccountController {
                 String newPass=authService.hashPass(account.getPassword());
                 acc.setPassword(newPass);
                 accountService.updateAccount(acc);
-                return ResponseEntity.ok(new AccountDTO(acc));
+                return ResponseEntity.ok("Password has changed");
             }else {
                 return ResponseEntity.badRequest().body("Mat khau khong chinh xac");
             }

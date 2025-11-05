@@ -25,6 +25,11 @@ public class RoleFillter implements Filter {
 
         String path=request.getRequestURI();
 
+        if (request.getMethod().equals("OPTIONS") || path.startsWith("/api/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         if ((path.contains("/api/book") && request.getMethod().equals("GET"))||path.startsWith("/api/auth/")){
             chain.doFilter(request,response);
             return;

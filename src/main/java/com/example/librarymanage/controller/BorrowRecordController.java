@@ -54,11 +54,11 @@ public class BorrowRecordController {
 
     @PostMapping("/records")
     public ResponseEntity<?> startRecords(
-            @RequestParam("accountId") Integer AccountId,
+            @RequestParam("accountId") Integer accountId,
             @RequestParam("bookId") Integer bookId)
     {
         try {
-            Account account= accountService.getOne(AccountId);
+            Account account= accountService.getOne(accountId);
             Books book=booksService.getOne(bookId);
             BorrowRecord created=borrowRecordService.startBorrowRecord(account,book);
             return ResponseEntity.ok(new BorrowRecordDTO(created));
@@ -71,11 +71,11 @@ public class BorrowRecordController {
 
     @PutMapping("/records")
     public ResponseEntity<?> endRecords(
-            @RequestParam("accountId") Integer AccountId,
+            @RequestParam("accountId") Integer accountId,
             @RequestParam("bookId") Integer bookId)
     {
         try {
-            Account account= accountService.getOne(AccountId);
+            Account account= accountService.getOne(accountId);
             Books book=booksService.getOne(bookId);
             BorrowRecord created=borrowRecordService.endBorrowRecord(account,book);
             return ResponseEntity.ok(new BorrowRecordDTO(created));
