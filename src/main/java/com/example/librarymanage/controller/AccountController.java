@@ -69,6 +69,7 @@ public class AccountController {
             if (authService.check(oldPass,cp)){
                 String newPass=authService.hashPass(account.getPassword());
                 acc.setPassword(newPass);
+                accountService.updateAccount(acc);
                 return ResponseEntity.ok(new AccountDTO(acc));
             }else {
                 return ResponseEntity.badRequest().body("Mat khau khong chinh xac");

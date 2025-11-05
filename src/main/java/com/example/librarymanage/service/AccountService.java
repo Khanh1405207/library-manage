@@ -62,7 +62,6 @@ public class AccountService {
         if (accountRepository.existsByEmailAndIdNot(account.getEmail(),account.getId())){
             throw new DuplicateKeyException("Email da ton tai");
         }
-        account.setPassword(authService.hashPass(account.getPassword()));
         return accountRepository.save(account);
     }
 

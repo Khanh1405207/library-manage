@@ -32,7 +32,7 @@ public class LoginController {
     @Autowired
     HttpSession session;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account){
         try{
             String username= account.getUsername();
@@ -54,7 +54,7 @@ public class LoginController {
     }
 
     @GetMapping("/get-info")
-    public ResponseEntity<?> getInfo(){
+    public ResponseEntity<?> getInfo(HttpSession session){
         if (session.getAttribute("username") == null){
             return ResponseEntity.badRequest().body("Chua dang nhap");
         }
