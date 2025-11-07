@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class BorrowRecordDTO {
 
     public String username;
+    public Integer bookId;
     public String bookTittle;
     public LocalDateTime startDate;
     public LocalDateTime endDate;
@@ -20,6 +21,7 @@ public class BorrowRecordDTO {
 
     public BorrowRecordDTO(BorrowRecord borrowRecord) {
         this.username = borrowRecord.getAccount().getUsername();
+        this.bookId = borrowRecord.getBook().getId();
         this.bookTittle = borrowRecord.getBook().getTitle();
         this.startDate = borrowRecord.getStartDate();
         this.endDate = borrowRecord.getEndDate();

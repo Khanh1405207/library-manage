@@ -6,6 +6,7 @@ import com.example.librarymanage.model.Role;
 import com.example.librarymanage.service.AccountService;
 import com.example.librarymanage.utility.AuthService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -25,6 +26,8 @@ public class AccountController {
     AccountService accountService;
     @Autowired
     AuthService authService;
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/accounts")
     public ResponseEntity<List<AccountDTO>> getListAccount(){
@@ -49,6 +52,7 @@ public class AccountController {
             acc.setUsername(account.getUsername());
             acc.setEmail(account.getEmail());
             Account updated=accountService.updateAccount(acc);
+            session.setAttribute("username",updated.getUsername());
             return ResponseEntity.ok(new AccountDTO(updated));
         }catch (DuplicateKeyException e) {
             return ResponseEntity.badRequest().body("Error :"+ e.getMessage());
