@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "a05be7fa-106b-4ae7-b5df-5d8f4231a8ea",
+		"name": "LIBTestAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45781200"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "get-books",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ten\": \"Nguyen Van Moi\",\r\n    \"tuoi\": 18,\r\n    \"ngaySinh\": \"2000-04-05\",\r\n    \"gioiTinh\": false,\r\n    \"lopHoc\": {\r\n        \"id\": 1,\r\n        \"ten\": \"SOF101\",\r\n        \"soTinChi\": 3\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/books",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-one-book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ten\": \"Nguyen Van Moi\",\r\n    \"tuoi\": 18,\r\n    \"ngaySinh\": \"2000-04-05\",\r\n    \"gioiTinh\": false,\r\n    \"lopHoc\": {\r\n        \"id\": 1,\r\n        \"ten\": \"SOF101\",\r\n        \"soTinChi\": 3\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/book/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookCode\": \"SA-066\",\r\n    \"title\": \"typing tutorial\",\r\n    \"author\": \"Khanh\",\r\n    \"category\": \"document\",\r\n    \"remaining\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/books",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 8,\r\n    \"bookCode\": \"SA-006\",\r\n    \"title\": \"typing tutorial\",\r\n    \"author\": \"Khanh\",\r\n    \"category\": \"document\",\r\n    \"remaining\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/books",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"bookCode\": \"SA-006\",\r\n    \"title\": \"typing tutorial\",\r\n    \"author\": \"Khanh\",\r\n    \"category\": \"document\",\r\n    \"remaining\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/books/9",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Khanh207\",\r\n    \"password\": \"K1405207\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Khanh207\",\r\n    \"password\": \"K1405207\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/get-info",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"get-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Khanh2007\",\r\n    \"password\": \"K1405207\",\r\n    \"email\": \"KKK14527@gmai.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/registry",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"registry"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "get-accounts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"bookCode\": \"SA-006\",\r\n    \"title\": \"typing tutorial\",\r\n    \"author\": \"Khanh\",\r\n    \"category\": \"document\",\r\n    \"remaining\": 50\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/accounts",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-one-accounts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"bookCode\": \"SA-006\",\r\n    \"title\": \"typing tutorial\",\r\n    \"author\": \"Khanh\",\r\n    \"category\": \"document\",\r\n    \"remaining\": 50\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/account/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-accounts",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 12,\r\n    \"username\": \"Khanh207user\",\r\n    \"email\": \"khanh14527@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/accounts",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-pass",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"password\": \"K1405207\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/account-change-pass?oldPass=Khanh207",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"account-change-pass"
+							],
+							"query": [
+								{
+									"key": "oldPass",
+									"value": "Khanh207"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Records",
+			"item": [
+				{
+					"name": "get-records",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"password\": \"K1405207\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/records",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-records-by-account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/records-by-account?accountId=11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"records-by-account"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-records-by-record",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/records-by-account?accountId=11&bookId=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"records-by-account"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "11"
+								},
+								{
+									"key": "bookId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "start-record",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/records?accountId=11&bookId=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"records"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "11"
+								},
+								{
+									"key": "bookId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end-record",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/records?accountId=11&bookId=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"records"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "11"
+								},
+								{
+									"key": "bookId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
