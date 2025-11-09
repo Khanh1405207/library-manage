@@ -13,3 +13,9 @@ REST API quản lý thư viện: sách, mượn trả, phân quyền.
 ## Chạy
 
 ./mvnw spring-boot:run
+
+## Postman Colection
+
+\src\main\resources\postman\LIBTestAPI.postman_collection.json
+
+API: http:localhost:8080
